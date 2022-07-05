@@ -1,5 +1,4 @@
-import subprocess
-subprocess.run('python3 -m pip install folium')
+
 import json
 import folium
 import pickle
