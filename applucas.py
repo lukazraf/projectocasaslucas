@@ -215,7 +215,7 @@ with col1:
 ### se muestra por panatalla
 if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
 
-    modelo_final = pickle.load(open('https://github.com/lukazraf/projectocasaslucas/blob/master/model_x.sav', 'rb'))
+    modelo_final = pickle.load(open('model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
     precio = modelo_final.predict(vector)[0]
     st.balloons()
