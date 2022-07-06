@@ -210,12 +210,16 @@ with col1:
 #      'Variables a incluir en los filtros:',
 #      ['Habitaciones', 'Baños', 'Área construida (pies cuadrados)','Pisos','Vista al agua','Evaluación de la propiedad','Condición'],
 #      ['Habitaciones', 'Baños'])
-cwd = os.getcwd()
 
-print(cwd)
 ### se carga el model xgboost para la estimacion del valor de la casa
 ### se muestra por panatalla
 if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
+    
+    cwd = os.getcwd()
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print(cwd)
+    st.metric("dir", f"${cwd}")
+    st.metric("full dir", f"${dir_path}")
 
     modelo_final = pickle.load(open('projectocasaslucas/model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
