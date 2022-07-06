@@ -25,7 +25,8 @@ st.sidebar.markdown("Características principales")
 
 # @st.cache
 def get_data():
-    
+        
+
     url = 'lucas20.csv'
     return pd.read_csv(url)
 
@@ -160,7 +161,7 @@ OptFiltro = st.multiselect(
   
 
 
-  col1, col2 = st.columns(2)
+  
   
   with col1:
     
