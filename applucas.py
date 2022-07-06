@@ -9,6 +9,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 from PIL                      import Image
+from glob                     import glob
 from plotly                   import express as px
 from warnings                 import filterwarnings
 from folium.plugins           import MarkerCluster
@@ -217,9 +218,11 @@ if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
     
     cwd = os.getcwd()
     dir_path = os.path.dirname(os.path.realpath(__file__))
+    files = glob("*")
     print(cwd)
     st.metric("dir", f"${cwd}")
     st.metric("full dir", f"${dir_path}")
+    st.metric("full dir", f"${"|".join(files)}")
 
     modelo_final = pickle.load(open('$/app/projectocasaslucas/model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
