@@ -221,7 +221,7 @@ if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
     st.metric("dir", f"${cwd}")
     st.metric("full dir", f"${dir_path}")
 
-    modelo_final = pickle.load(open('projectocasaslucas/model_x.sav', 'rb'))
+    modelo_final = pickle.load(open('$/app/projectocasaslucas/model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
     precio = modelo_final.predict(vector)[0]
     st.balloons()
