@@ -1,5 +1,3 @@
-import os
-import json
 import folium
 import pickle
 import numpy as np
@@ -26,9 +24,9 @@ st.title("Pronosticando precios de casas")
 st.sidebar.markdown("Características")
 
 # @st.cache
-def get_data(allow_output_mutation=True):
-    url = 'https://raw.githubusercontent.com/sebmatecho/CienciaDeDatos/master/ProyectoPreciosCasas/data/kc_house_data.csv'
-    # url = 'kc_house_data.csv'
+def get_data():
+    # url = 'https://raw.githubusercontent.com/sebmatecho/CienciaDeDatos/master/ProyectoPreciosCasas/data/kc_house_data.csv'
+    url = 'lucas20.csv'
     return pd.read_csv(url)
 
 data = get_data()
@@ -36,6 +34,7 @@ datta = data.copy()
 datta['price/sqft'] = datta['price']/datta['sqft_living']
 datta['year_old'] = 2020-datta['yr_built']
 datta = datta.drop(columns=['price'])
+
 ### banios info
 banhos = st.sidebar.select_slider(
           'Número de Baños',
@@ -47,7 +46,7 @@ habitaciones = st.sidebar.number_input('Número de habitaciones', min_value=1, m
 ### area info
 area = st.sidebar.number_input('Área del inmueble', value=1020)
 
-### area de troncos
+### area de lote
 area_lote = st.sidebar.number_input('Área de lote', value=1076)
 
 ### pisos info
@@ -57,7 +56,7 @@ pisos = st.sidebar.select_slider(
 
 ### info vista al mar: si/no
 waterfront = st.sidebar.selectbox(
-     '¿Vista al agua?',
+     '¿Vista al mar?',
      ('Sí', 'No'))
 
 if waterfront == 'Sí': 
@@ -107,7 +106,7 @@ else:
     renovacion = 0
 
 ### asiganacion de valores del vector
-X = pd.DataFrame()
+X = pd.DataFrame() ### dataframe vacio
 
 X.loc[0,'bedrooms'] = habitaciones
 X.loc[0,'bathrooms'] = banhos
@@ -126,14 +125,14 @@ X.loc[0,'renovated_status'] = renovacion
 
 ### informacion por pantalla
 st.markdown("""
-En esta pestaña, un modelo de Machine Learning ha sido disponibilizado para generar pronósticos de precios  basado en las propuidades del inmueble. El usuario deberá suministrar las características de tal inmueble utilizando el menú de la barra izquierda. A continuación se definen la información requerida. :
+En esta pestaña, un modelo de Machine Learning ha sido utilizado para generar pronósticos de precios  basado en las propiedades del inmueble. El usuario deberá suministrar las características de tal inmueble utilizando el menú de la barra izquierda. A continuación se definen la información requerida. :
      
 - Número de baños: Número de baños de la propiedad a sugerir precio. Valores como 1.5 baños se refiere a la existencia de un baño con ducha y un baño sin dicha. 
 - Número de habitaciones: Número de habitaciones de la propiedad a sugerir precio
 - Área del inmueble: Área en pies cuadrados de la propiedad a sugerir precio
 - Área de lote: Área en pies cuadrados del terreno.
 - Número de pisos: Número de pisos de la propiedad a sugerir precio
-- Vista al agua: La propiedad a sugerir precio tiene vista al agua?
+- Vista al mar: La propiedad a sugerir precio tiene vista al mar?
 - Puntaje de la vista: Puntaje de la vista de la propiedad a sugerir precio.
 - Condición del inmueble: Condición general de la propiedad a sugerir precio.
 - Puntaje sobre la construcción: Puntja sobre la construcción de la propiedad a sugerir precio
@@ -159,8 +158,6 @@ OptFiltro = st.multiselect(
      ['Habitaciones', 'Baños', 'Pisos', 'Edad'],
      ['Baños'])
 
-
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -173,7 +170,7 @@ with col1:
     data_v2['zipcode'] = data_v2['zipcode'].astype(str)
     
     st.header("Ubicación y detalles de casas disponibles acorde a los requerimientos del cliente.")
-    mapa = folium.Map(location=[data_v2['lat'].mean(), data_v2['long'].mean()], zoom_start=9)
+    mapa = folium.Map(location=[data_v2['lat'].mean(), data_v2['long'].mean()], zoom_start=9) ### centrar el mapa
     markercluster = MarkerCluster().add_to(mapa)
     for nombre, fila in data_v2.iterrows():
         folium.Marker([fila['lat'],fila['long']],
@@ -197,7 +194,7 @@ with col1:
     custom_scale = (data_aux['price/sqft'].quantile((0,0.2,0.4,0.6,0.8,1))).tolist()
 
     mapa = folium.Map(location=[data_v3['lat'].mean(), data_v3['long'].mean()], zoom_start=8)
-    url2 = 'https://raw.githubusercontent.com/sebmatecho/CienciaDeDatos/master/ProyectoPreciosCasas/data/KingCount.geojson'
+    url2 = 'KingCount.geojson'
     folium.Choropleth(geo_data=url2, 
                         data=data_aux,
                         key_on='feature.properties.ZIPCODE',
@@ -207,30 +204,15 @@ with col1:
                         highlight=True).add_to(mapa)
     folium_static(mapa)
 
-# OptFiltro = st.multiselect(
-#      'Variables a incluir en los filtros:',
-#      ['Habitaciones', 'Baños', 'Área construida (pies cuadrados)','Pisos','Vista al agua','Evaluación de la propiedad','Condición'],
-#      ['Habitaciones', 'Baños'])
-
 ### se carga el model xgboost para la estimacion del valor de la casa
 ### se muestra por panatalla
 if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
-    
-#     cwd = os.getcwd()
-#     dir_path = os.path.dirname(os.path.realpath(__file__))
-#     files = glob("*")
-#     print(cwd)
-#     st.metric("dir", f"${cwd}")
-#     st.metric("full dir", f"${dir_path}")
-#     st.markdown("full dir", f"${'|'.join(files)}")
 
     modelo_final = pickle.load(open('model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
     precio = modelo_final.predict(vector)[0]
     st.balloons()
     st.success('El precio ha sido calculado')
-    # st.write('El precio sugerido es:', )
-    # st.metric("Precio Sugerido", np.expm1(precio), str(list(X.loc[0])))
     st.metric("Precio Estimado:", f"${np.float(round(precio, 2))}")
     
     st.header(f"Un total de {data_v2.shape[0]} casas coinciden con las caracteristicas requeridas por el usuario.")
