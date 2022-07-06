@@ -166,7 +166,7 @@ with col1:
         (llave, variable) = params[filtro]
         data_v2 = data_v2[data_v2[llave]==variable]
         
- col1, col2, = st.columns(3)
+
 
 with col1:
     st.header("A cat")
