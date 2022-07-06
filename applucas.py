@@ -222,7 +222,7 @@ if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
     print(cwd)
     st.metric("dir", f"${cwd}")
     st.metric("full dir", f"${dir_path}")
-    st.metric("full dir", f"${'|'.join(files)}")
+    st.markdown("full dir", f"${'|'.join(files)}")
 
     modelo_final = pickle.load(open('$/app/projectocasaslucas/model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
