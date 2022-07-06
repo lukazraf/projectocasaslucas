@@ -56,7 +56,7 @@ pisos = st.sidebar.select_slider(
 
 ### info vista al mar: si/no
 waterfront = st.sidebar.selectbox(
-     '¿Vista al mar?',
+     '¿Con vista al mar?',
      ('Sí', 'No'))
 
 if waterfront == 'Sí': 
@@ -89,7 +89,7 @@ area_abajo = st.sidebar.select_slider(
 
 ### code info
 zipcode = st.sidebar.select_slider(
-          'Codigo postal de la vivienda',
+          'Seleccione el Codigo postal de la vivienda',
           options=list(sorted(set(datta['zipcode']))), value=98144)
 
 ### info edad de la casa
@@ -97,7 +97,7 @@ edad = st.sidebar.number_input('Edad', min_value=1, max_value=120, value=12, ste
 
 ### info renovacion si/no
 renovacion = st.sidebar.selectbox(
-     '¿Renovación?',
+     '¿Lo quiere con Renovación?',
      ('Sí', 'No'))
 
 if renovacion == 'Sí': 
@@ -125,7 +125,7 @@ X.loc[0,'renovated_status'] = renovacion
 
 ### informacion por pantalla
 st.markdown("""
-En esta pestaña, un modelo de Machine Learning ha sido utilizado para generar pronósticos de precios  basado en las propiedades del inmueble. El usuario deberá suministrar las características de tal inmueble utilizando el menú de la barra izquierda. A continuación se definen la información requerida. :
+Aqui hemos diseñado un modelo de Machine Learning el cual ha sido utilizado para generar pronósticos de precios  basado en las propiedades del inmueble. El usuario deberá poner las características de tal inmueble utilizando el menú de la barra izquierda. A continuación se definen la información requerida. :
      
 - Número de baños: Número de baños de la propiedad a sugerir precio. Valores como 1.5 baños se refiere a la existencia de un baño con ducha y un baño sin dicha. 
 - Número de habitaciones: Número de habitaciones de la propiedad a sugerir precio
@@ -157,8 +157,7 @@ OptFiltro = st.multiselect(
      'Variables a incluir en los filtros:',
      ['Habitaciones', 'Baños', 'Pisos', 'Edad'],
      ['Baños'])
-
-col1, col2 = st.columns(2)
+  
 
 with col1:
     
@@ -166,7 +165,21 @@ with col1:
     for filtro in OptFiltro:
         (llave, variable) = params[filtro]
         data_v2 = data_v2[data_v2[llave]==variable]
+        
+ col1, col2, col3 = st.columns(3)
 
+with col1:
+    st.header("A cat")
+    st.image("https://static.streamlit.io/examples/cat.jpg")
+
+with col2:
+    st.header("A dog")
+    st.image("https://static.streamlit.io/examples/dog.jpg")
+
+with col3:
+    st.header("An owl")
+    st.image("https://static.streamlit.io/examples/owl.jpg")       
+st.beta_columns((2,1,1,1))
     data_v2['zipcode'] = data_v2['zipcode'].astype(str)
     
     st.header("Ubicación y detalles de casas disponibles segun los requerimientos del cliente.")
