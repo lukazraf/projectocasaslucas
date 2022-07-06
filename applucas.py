@@ -20,12 +20,12 @@ st.set_page_config(page_title='App - Pronóstico',
                     page_icon='🚀',  
                     initial_sidebar_state="expanded")
 
-st.title("Pronosticando precios de casas")
-st.sidebar.markdown("Características")
+st.title("Pronosticando precios de las casas de este sector de seattle")
+st.sidebar.markdown("Características principales")
 
 # @st.cache
 def get_data():
-    # url = 'https://raw.githubusercontent.com/sebmatecho/CienciaDeDatos/master/ProyectoPreciosCasas/data/kc_house_data.csv'
+    
     url = 'lucas20.csv'
     return pd.read_csv(url)
 
@@ -66,7 +66,7 @@ else:
 
 ### info calidad de la vista
 vista = st.sidebar.selectbox(
-     'Puntaje de la vista',
+     'Puntaje en cuanto a su vista',
      (0,1,2,3,4))
 
 ### info estado de la casa
@@ -169,7 +169,7 @@ with col1:
 
     data_v2['zipcode'] = data_v2['zipcode'].astype(str)
     
-    st.header("Ubicación y detalles de casas disponibles acorde a los requerimientos del cliente.")
+    st.header("Ubicación y detalles de casas disponibles segun los requerimientos del cliente.")
     mapa = folium.Map(location=[data_v2['lat'].mean(), data_v2['long'].mean()], zoom_start=9) ### centrar el mapa
     markercluster = MarkerCluster().add_to(mapa)
     for nombre, fila in data_v2.iterrows():
