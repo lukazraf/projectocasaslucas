@@ -216,15 +216,15 @@ with col1:
 ### se muestra por panatalla
 if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
     
-    cwd = os.getcwd()
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    files = glob("*")
-    print(cwd)
-    st.metric("dir", f"${cwd}")
-    st.metric("full dir", f"${dir_path}")
-    st.markdown("full dir", f"${'|'.join(files)}")
+#     cwd = os.getcwd()
+#     dir_path = os.path.dirname(os.path.realpath(__file__))
+#     files = glob("*")
+#     print(cwd)
+#     st.metric("dir", f"${cwd}")
+#     st.metric("full dir", f"${dir_path}")
+#     st.markdown("full dir", f"${'|'.join(files)}")
 
-    modelo_final = pickle.load(open('$/app/projectocasaslucas/model_x.sav', 'rb'))
+    modelo_final = pickle.load(open('model_x.sav', 'rb'))
     vector = np.array(list(X.loc[0])).reshape(-1, 1).T
     precio = modelo_final.predict(vector)[0]
     st.balloons()
