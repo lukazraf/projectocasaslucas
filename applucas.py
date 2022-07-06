@@ -1,3 +1,4 @@
+import os
 import json
 import folium
 import pickle
@@ -209,7 +210,9 @@ with col1:
 #      'Variables a incluir en los filtros:',
 #      ['Habitaciones', 'Baños', 'Área construida (pies cuadrados)','Pisos','Vista al agua','Evaluación de la propiedad','Condición'],
 #      ['Habitaciones', 'Baños'])
+cwd = os.getcwd()
 
+print(cwd)
 ### se carga el model xgboost para la estimacion del valor de la casa
 ### se muestra por panatalla
 if st.sidebar.button('Los parámetros han sido cargados. Calcular precio'):
