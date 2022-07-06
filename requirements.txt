@@ -8,6 +8,5 @@ seaborn
 numpy
 plotly
 streamlit_folium
-boto3
 scikit-learn==1.1.1
 xgboost==1.6.1
