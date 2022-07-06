@@ -161,8 +161,8 @@ OptFiltro = st.multiselect(
   
 
   
-  col1, col2 = st.columns(2)
-  with col1:
+col1, col2 = st.columns (2)       
+with col1:
     
     data_v2 = datta.copy()
     for filtro in OptFiltro:
