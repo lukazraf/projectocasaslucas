@@ -17,7 +17,7 @@ from distutils.fancy_getopt   import OptionDummy
 filterwarnings('ignore')
 st.set_page_config(page_title='App - Pronóstico',
                     layout="wide", 
-                    page_icon='🚀',  
+                    page_icon='❤',  
                     initial_sidebar_state="expanded")
 
 st.title("Pronosticando precios de las casas de este sector de seattle")
@@ -94,7 +94,7 @@ zipcode = st.sidebar.select_slider(
           options=list(sorted(set(datta['zipcode']))), value=98144)
 
 ### info edad de la casa
-edad = st.sidebar.number_input('Edad', min_value=1, max_value=120, value=12, step=1)
+años de construido= st.sidebar.number_input('Edad', min_value=1, max_value=120, value=12, step=1)
 
 ### info renovacion si/no
 renovacion = st.sidebar.selectbox(
@@ -121,7 +121,7 @@ X.loc[0,'grade'] = puntaje
 X.loc[0,'sqft_above'] = area_arriba
 X.loc[0,'sqft_basement'] = area_abajo
 X.loc[0,'zipcode'] = zipcode
-X.loc[0,'year_old'] = edad
+X.loc[0,'year_old'] = años de construido
 X.loc[0,'renovated_status'] = renovacion
 
 ### informacion por pantalla
