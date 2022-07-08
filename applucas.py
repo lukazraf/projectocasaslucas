@@ -94,7 +94,7 @@ zipcode = st.sidebar.select_slider(
           options=list(sorted(set(datta['zipcode']))), value=98144)
 
 ### info edad de la casa
-años de construido= st.sidebar.number_input('Edad', min_value=1, max_value=120, value=12, step=1)
+anhos de construido= st.sidebar.number_input('Edad', min_value=1, max_value=120, value=12, step=1)
 
 ### info renovacion si/no
 renovacion = st.sidebar.selectbox(
@@ -121,7 +121,7 @@ X.loc[0,'grade'] = puntaje
 X.loc[0,'sqft_above'] = area_arriba
 X.loc[0,'sqft_basement'] = area_abajo
 X.loc[0,'zipcode'] = zipcode
-X.loc[0,'year_old'] = años de construido
+X.loc[0,'year_old'] = anhos de construido
 X.loc[0,'renovated_status'] = renovacion
 
 ### informacion por pantalla
