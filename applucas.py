@@ -17,7 +17,7 @@ from distutils.fancy_getopt   import OptionDummy
 filterwarnings('ignore')
 st.set_page_config(page_title='App - Pronóstico',
                     layout="wide", 
-                    page_icon='🚀',  
+                    page_icon='❤',  
                     initial_sidebar_state="expanded")
 
 st.title("Pronosticando precios de las casas de este sector de seattle")
@@ -185,8 +185,10 @@ with col1:
                          fila['price/sqft'])
           ).add_to(markercluster)
     folium_static(mapa)
+    
 
 col1, col2 = st.columns(2)
+
 with col1:
 
     data_v3 = datta.copy()
