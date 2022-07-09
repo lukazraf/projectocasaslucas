@@ -186,10 +186,7 @@ with col1:
           ).add_to(markercluster)
     folium_static(mapa)
     
-from PIL import Image
-image = Image.open('sunrise.jpg')
 
-st.image(image, caption='Sunrise by the mountains')
 col1, col2 = st.columns(2)
 
 with col1:
