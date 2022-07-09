@@ -168,6 +168,7 @@ with col1:
     for filtro in OptFiltro:
         (llave, variable) = params[filtro]
         data_v2 = data_v2[data_v2[llave]==variable]
+        
     data_v2['zipcode'] = data_v2['zipcode'].astype(str)
     
     st.header("Ubicación y detalles de casas disponibles segun los requerimientos del cliente.")
